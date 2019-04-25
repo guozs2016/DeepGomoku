@@ -24,6 +24,10 @@ class gomoku():
             raise Exception("A stone has been put in this place!")
         else:
             self.gameBoard[place] = -1
+    """set up a new game, to be updated with pygame imported
+    """
+    def newgame(self):
+        self.gameBoard = np.zeros((15*15,1))
 
     """Use convolution calculation to find game condition,
     Condition is a (4,1) vector represent:
@@ -56,7 +60,7 @@ class gomoku():
    tuple --- (place in rows,place in columns) range from (0,15))
    place in array --- int range from (0,225)
 """
-def boardToArray(placeInBoard): 
+def boardToArray(placeInBoard):
     return placeInBoard[0]*15+placeInBoard[1]
 def arrayToBoard(placeInArray):
     return (placeInArray//15,placeInArray%15)
