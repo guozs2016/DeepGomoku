@@ -37,25 +37,25 @@ class gomoku():
       if game is not finished)
     """
     def gameCondition(self):
-        m = g.getGameBoard().reshape((15,15))
+        m = self.getGameBoard().reshape((15,15))
         horizontal = np.array([1,1,1,1,1]).reshape(1,5)
         vertical = np.array([1,1,1,1,1]).reshape(5,1)
         identity = np.eye(5)
         exchange = np.fliplr(identity)
-        b = convolve2d(m,horizontal,mode="valid") #5 stones in a horizontal row
-        c = convolve2d(m,vertical,mode='valid')  #5 stones in a vertical row
-        d = convolve2d(m,diagonal,mode='valid')
-        #5 stones in a digonal row (upper left to bottom right)
+        b = convolve2d(m,horizontal,mode="valid")#5 stones in one row
+        c = convolve2d(m,vertical,mode='valid')#5 stones in one column
+        d = convolve2d(m,identity,mode='valid')
+        #5 stones from upper left to bottom right
         e = convolve2d(m,exchange,mode='valid')
-        #5 stones in a digonal row (upper right to bottom left)
+        #5 stones from supper right to bottom left
         if (5 in b or 5 in c or 5 in d or 5 in e):
             return np.array([1,0,0,0]).reshape(1,4)
         elif (-5 in b or -5 in c or -5 in d or -5 in e):
             return np.array([0,1,0,0]).reshape(1,4)
-        elif 0 in m:
-            return np.array([0,0,0,1]).reshape(1,4)
-        else:
+        elif 0 not in m:
             return np.array([0,0,1,0]).reshape(1,4)
+        else:
+            return np.array([0,0,0,1]).reshape(1,4)
 """two functions to exchange board and a place in gameboard array
    tuple --- (place in rows,place in columns) range from (0,15))
    place in array --- int range from (0,225)
